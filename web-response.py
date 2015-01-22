@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import requests
 import time
 
@@ -10,20 +10,21 @@ def hello_world():
     return 'Hello World!'
 
 
-@app.route('/response/<website>')
-def w_response(website):
-
-    url = 'http://' + website
+@app.route('/response',  methods=['GET'])
+def w_response():
+    website = request.args.get('website')
+    protocol = request.args.get('protocol')
+    url = protocol + '://' + website
 
     start = time.time()
     r = requests.get(url)
     r.raw.read()
     end = time.time()
-    t = str(int(round((end -start) * 1000)))
+    t = int(round((end -start) * 1000))
     response_time = {}
     response_time['time'] = t
 
     return jsonify(response_time)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run()
