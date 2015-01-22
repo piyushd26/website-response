@@ -13,4 +13,4 @@ Response
 
 Example
 
-http://mon-vdc1.pcloud.vn/response/dantri.com.vn
+http://mon.pcloud.vn/response?website=vnexpress.net&protocol=http
