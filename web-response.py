@@ -15,7 +15,7 @@ def w_response(website):
     url = 'http://' + website
 
     start = time.time()
-    r = requests.get(url)
+    r = requests.get(url, timeout=3)
     r.raw.read()
     end = time.time()
     t = end - start
