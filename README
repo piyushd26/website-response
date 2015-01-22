@@ -1,6 +1,16 @@
 
 Check Website Response time
 
+
 Require
 1. Flask ( http://flask.pocoo.org/)
 2. Requests ( http://docs.python-requests.org/en/latest/)
+
+Response
+
+- Data results in json format
+- Response time in milliseconds
+
+Example
+
+http://mon-vdc1.pcloud.vn/response/dantri.com.vn

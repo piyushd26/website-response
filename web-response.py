@@ -16,14 +16,14 @@ def w_response(website):
     url = 'http://' + website
 
     start = time.time()
-    r = requests.get(url, timeout=3)
+    r = requests.get(url)
     r.raw.read()
     end = time.time()
-    t = int(round((end -start) * 1000))
+    t = str(int(round((end -start) * 1000)))
     response_time = {}
     response_time['time'] = t
 
     return jsonify(response_time)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
