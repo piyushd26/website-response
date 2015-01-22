@@ -23,7 +23,7 @@ def w_response(website):
     response_time = {}
     response_time['time'] = t
 
-    return jsonify(results=response_time)
+    return jsonify(response_time)
 
 if __name__ == '__main__':
     app.run()
