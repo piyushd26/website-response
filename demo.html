@@ -1,0 +1,123 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery.getJSON demo</title>
+  <script type="text/javascript" src="http://muachung.vn/javascript/jquery/jquery.min.js?v=1.7.2"></script>
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+  <script src="http://code.highcharts.com/modules/exporting.js"></script>
+  
+  
+
+
+</head>
+<body>
+ 
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+ 
+ <script>
+     function getDataView(){
+         var rt = '';
+         $.ajax({
+                type: 'GET',
+                url: 'http://mon.pcloud.vn/response/dantri.com.vn',
+                dataType: 'json',
+                success: function (data) {
+
+
+                rt = data.time;
+
+                }});
+                return rt;
+     }
+     $(function () {
+           $(document).ready(function () {
+                             var url = 'http://mon.pcloud.vn/response?website=dantri.com.vn&protocol=http';
+                             Highcharts.setOptions({
+                                                   global: {
+                                                   useUTC: false
+                                                   }
+                                                   });
+                             
+                             $('#container').highcharts({
+                                                        chart: {
+                                                        type: 'spline',
+                                                        animation: Highcharts.svg, // don't animate in old IE
+                                                        marginRight: 10,
+                                                        events: {
+                                                        load: function () {
+                                                        
+                                                        // set up the updating of the chart each second
+                                                        var series = this.series[0];
+                                                        
+                                                        setInterval(function () {
+                                                                    $.ajax({
+                                                                           type: 'GET',
+                                                                           url: url,
+                                                                           dataType: 'json',
+                                                                           success: function (data) {
+                                                                                var x = (new Date()).getTime(),
+                                                                                y = parseInt(data.time);
+                                                                                series.addPoint([x, y], true, true);
+                                                                           }});
+                                                                    
+                                                                    
+                                                                    }, 2000);
+                                                        }
+                                                        }
+                                                        },
+                                                        title: {
+                                                        text: 'Response time'
+                                                        },
+                                                        xAxis: {
+                                                        type: 'datetime',
+                                                        tickPixelInterval: 150
+                                                        },
+                                                        yAxis: {
+                                                        title: {
+                                                        text: 'Time (ms)'
+                                                        },
+                                                        plotLines: [{
+                                                                    value: 0,
+                                                                    width: 1,
+                                                                    color: '#808080'
+                                                                    }]
+                                                        },
+                                                        tooltip: {
+                                                        formatter: function () {
+                                                        return '<b>' + this.series.name + '</b><br/>' +
+                                                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                                                        Highcharts.numberFormat(this.y, 2);
+                                                        }
+                                                        },
+                                                        legend: {
+                                                        enabled: false
+                                                        },
+                                                        exporting: {
+                                                        enabled: false
+                                                        },
+                                                        series: [{
+                                                                 name: 'Random data',
+                                                                 data: (function () {
+                                                                        // generate an array of random data
+                                                                        var data = [],
+                                                                        time = (new Date()).getTime(),
+                                                                        i;
+                                                                        
+                                                                     for (i = -19; i <= 0; i += 1) {
+                                                                        data.push({
+                                                                                  x: time + i * 1000,
+                                                                                  y: 0
+                                                                                  });
+                                                                        }
+                                                                        
+                                                                        return data;
+                                                                        }())
+                                                                 }]
+                                                        });
+                             });
+           });
+          
+</script>
+ 
+</body>
+</html>
