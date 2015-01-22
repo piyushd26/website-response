@@ -15,23 +15,10 @@
 <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
  
  <script>
-     function getDataView(){
-         var rt = '';
-         $.ajax({
-                type: 'GET',
-                url: 'http://mon.pcloud.vn/response/dantri.com.vn',
-                dataType: 'json',
-                success: function (data) {
 
-
-                rt = data.time;
-
-                }});
-                return rt;
-     }
      $(function () {
            $(document).ready(function () {
-                             var url = 'http://mon.pcloud.vn/response?website=dantri.com.vn&protocol=http';
+                             var url = 'http://mon-vdc1.pcloud.vn/response?website=dantri.com.vn&protocol=http';
                              Highcharts.setOptions({
                                                    global: {
                                                    useUTC: false
@@ -96,7 +83,7 @@
                                                         enabled: false
                                                         },
                                                         series: [{
-                                                                 name: 'Random data',
+                                                                 name: 'Response time',
                                                                  data: (function () {
                                                                         // generate an array of random data
                                                                         var data = [],
