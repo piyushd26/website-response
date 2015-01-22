@@ -1,7 +1,6 @@
-from flask import Flask
+from flask import Flask, jsonify
 import requests
 import time
-import json
 
 app = Flask(__name__)
 
@@ -24,7 +23,7 @@ def w_response(website):
     response_time = {}
     response_time['time'] = t
 
-    return '%s' % json.dumps(response_time)
+    return jsonify(results=response_time)
 
 if __name__ == '__main__':
     app.run()
